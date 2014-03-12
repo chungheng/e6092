@@ -1,4 +1,5 @@
-e6092
-=====
+This repository contains the recitation notes for EEBME6092 taught by Prof. Lazar at Columbia University. For more information about the class, please read the [course description](http://www.bionet.ee.columbia.edu/courses/EEBM_E6092/2014).
 
-Recitation notes for e6092
+Contents:
+* [Recitation 1](https://github.com/neurokernel/neurokernel/wiki/Using-IPython-Notebooks): Introduction to IPython notebook.
+* [Recitation 2](recitation_2.md): Installing [NeuroKernel](http://neurokernel.github.io/) with [virtualenv](http://www.virtualenv.org/en/latest/).
