@@ -24,9 +24,10 @@ system, inside the virtual environment, all executables (such as `python`) are
 stored under `bin`, and all library files or packages (such as `numpy`) are
 placed under `lib`. By default, `bin` of the virtual environment is not added
 to `$PATH`. `virtual` provides with a handy script called `activate` under
-`bin` to resolve path dependency. To use `activate`, continuing with the above
-setup, first navigate into `$HOME/NK/bin` and then run the following command:
+`bin` to resolve path dependency. To use `activate` with the `NK` virtual
+environment, run the following command:
 
+    $ cd ~/NK/bin
     $ source activate
 
 This will change your `$PATH` so its first entry is the `bin` of the virtual
@@ -44,7 +45,7 @@ You can switch back to your regular environment by using `deactivate` function:
 It simply undoes the changes to your `$PATH` and shell prompt. We summarize
 this section in the following commands:
 
-    $ which python 
+    $ which python
     ... path to the default python on the system ...
     $ cd ~/NK/bin
     $ source activate
