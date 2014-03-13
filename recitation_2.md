@@ -15,7 +15,7 @@ modification.
 environment named `NK` under the home directory, run the following commands:
 
     $ cd ~
-    $ virtual NK
+    $ virtualenv NK
     ....
     $ cd NK
 
