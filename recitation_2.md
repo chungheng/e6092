@@ -15,17 +15,17 @@ modification.
 environment named `NK` under the home directory, run the following commands:
 
     $ cd ~
-    $ virtual NK
+    $ virtualenv NK
     ....
     $ cd NK
 
-You will see several directories including `bin` and `lib`. Like the usual Unix
-system, inside the virtual environment, all executables (such as `python`) are
-stored under `bin`, and all library files or packages (such as `numpy`) are
-placed under `lib`. By default, `bin` of the virtual environment is not added
-to `$PATH`. `virtual` provides with a handy script called `activate` under
-`bin` to resolve path dependency. To use `activate` with the `NK` virtual
-environment, run the following command:
+You will see several subdirectories under `NK` including `bin` and `lib`. Like
+the usual Unix system, inside the virtual environment, all executables (such
+as `python`) are stored under `bin`, and all library files or packages (such
+as `numpy`) are placed under `lib`. By default, `bin` of the virtual environment
+is not added to `$PATH`. `virtual` provides us with a handy script called
+`activate` under `bin` to resolve path dependency. To use `activate` with the
+`NK` virtual environment, run the following command:
 
     $ cd ~/NK/bin
     $ source activate
