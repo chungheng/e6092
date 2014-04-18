@@ -4,3 +4,5 @@ Contents:
 * [Recitation 1](https://github.com/neurokernel/neurokernel/wiki/Using-IPython-Notebooks): Introduction to IPython notebook.
 * [Recitation 2](recitation_2.md): Install [NeuroKernel](http://neurokernel.github.io/) with [virtualenv](http://www.virtualenv.org/en/latest/).
 * [Recitation 3](recitation_3.md): Implement neuron model on GPU.
+* [Recitation 4](recitation_4.md): Debug tips.
+* [Recitation 5](recitation_5.md): Explore PyCuda.
