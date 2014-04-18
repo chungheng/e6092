@@ -40,13 +40,23 @@ some `PyCUDA` API's.
 
 ### GPU resource allocation ###
 
+To start a GPU program, we need to first go through 3 steps: i) initialize a cuda driver;
+ii) specify a GPU device to the driver; iii) create a context on the device. However, we
+are lazy, and `PyCUDA` knows _that_. `PyCUDA` allows us to achieve the three steps in one
+line:
+
     import pycuda.autoinit
     import pycuda.driver as drv
 
 ### Source Code and Compilation ###
 
+`SourceModule` is a python wrapper of the cuda compiler. It takes the cuda source
+code stored in a python string together with some optinal arguments as input, and
+compiles the source code, and caches the resultant program, so later on we run the
+program, the `PyCUDA` compiler will not re-compile the source code, unless it is
+updated.
+
     from pycuda.compiler import SourceModule
-    mod = SourceModule("""
     mod = SourceModule("""
     __global__ void vec_elm_mul(float *dest, float *a, float *b)
     {
@@ -56,6 +66,17 @@ some `PyCUDA` API's.
     """, options = ["--ptxas-options=-v"])
     vec_elm_mul = mod.get_function("vec_elm_mul")
 
+With the optianl argument `options = ["--ptxas-options=-v"]`, the compiler prints
+out compilation message at the ternimal output. For example, after running
+`pycuda_demo.py`, we will see,
+
+    pycuda_demo.py:13: UserWarning: The CUDA compiler succeeded, but said the following:
+    ptxas info    : 0 bytes gmem
+    ptxas info    : Compiling entry function 'multiply_them' for 'sm_20'
+    ptxas info    : Function properties for multiply_them
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+    ptxas info    : Used 12 registers, 56 bytes cmem[0]
+    
 ### Initialization of data on CPU ###
 
     a = numpy.random.randn(400).astype(numpy.float32)
