@@ -16,7 +16,8 @@ into 6 parts as follows,
 `PyCUDA` provides a handful of high level API's for _gpu resource allocation_,
 _data transfer_, and _cuda code compilation_, etc. In the following, we will
 go through a toy program [pycuda_demo.py](./src/pycuda_demo.py) to demostrate
-some `PyCUDA` API's.
+some `PyCUDA` API's. We will see that `PyCUDA` does a lot for us, and some of
+the parts are implicitly done by `PyCUDA`. 
 
     import pycuda.autoinit
     import pycuda.driver as drv
@@ -40,7 +41,7 @@ some `PyCUDA` API's.
 
 ### GPU resource allocation ###
 
-To start a GPU program, we need to first go through 3 steps: i) initialize a cuda driver;
+To start a GPU program, we usually need to go through 3 steps: i) initialize a cuda driver;
 ii) specify a GPU device to the driver; iii) create a context on the device. However, we
 are lazy, and `PyCUDA` knows _that_. `PyCUDA` allows us to achieve the three steps in one
 line:
@@ -79,11 +80,25 @@ out compilation message at the ternimal output. For example, after running
     
 ### Initialization of data on CPU ###
 
+Here is quite standard. We use `numpy` to allocate memory on CPU.
+
     a = numpy.random.randn(400).astype(numpy.float32)
     b = numpy.random.randn(400).astype(numpy.float32)
     dest = numpy.zeros_like(a)
 
-### Executation ###
+### Executation and More ###
+
+At first glance, it seems that we ommit the memory transfer from CPU to GPU and
+the other direction. In fact, we call two `PyCUDA` magical functions
+`pycuda.driver.In` and `pycuda.driver.Out` to perform data copying. When an CPU
+array is passed into `pycuda.driver.In` and the output of `pycuda.driver.In` is
+then passed into a cuda function, `PyCUDA` will automatically allocate a chunk
+of memory on GPU, copy the data from CPU to GPU, and finally pass the address
+of the GPU memroy to the cuda function.
 
     vec_elm_mul( drv.Out(dest), drv.In(a), drv.In(b),
                  block=(400,1,1), grid=(1,1))
+                 
+Likewise, `pycuda.driver.Out` will allocate memory on GPU first, pass the address
+of GPU memory to the cuda function, and copy the data from GPU to CPU after the
+execution of the cuda function.
