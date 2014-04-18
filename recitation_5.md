@@ -13,6 +13,10 @@ into 6 parts as follows,
   * Executation of CUDA program
   * Copying data back from GPU to CPU
 
+`PyCUDA` provides a handful of high level API's for _gpu resource allocation_,
+_data transfer_, and _cuda code compilation_, etc. In the following, we will
+go through a toy program [pycuda_demo.py](./src/pycuda_demo.py) to demostrate
+some `PyCUDA` API's.
 
     import pycuda.autoinit
     import pycuda.driver as drv
