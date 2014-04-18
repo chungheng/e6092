@@ -2,15 +2,15 @@
 
 ## PyCUDA: First Look ##
 
-`PyCUDA` is a wrapper for `CUDA` which hides detail operations needed to compile
-and run a cuda program. In general, a PyCUDA program contain can be decomposed
-into 6 parts as follows,
+`PyCUDA` is a wrapper for `CUDA` which hides detail operations needed to
+compile and run a cuda program. In general, a PyCUDA program contain can be
+decomposed into 6 parts as follows,
 
   * GPU resource allocation
   * Specifying cuda source code, and compilation.
   * Initialization of data on CPU
   * Copying data from CPU to GPU
-  * Executation of CUDA program
+  * Execution of CUDA program
   * Copying data back from GPU to CPU
 
 `PyCUDA` provides a handful of high level API's for _gpu resource allocation_,
@@ -41,21 +41,21 @@ the parts are implicitly done by `PyCUDA`.
 
 ### GPU resource allocation ###
 
-To start a GPU program, we usually need to go through 3 steps: i) initialize a cuda driver;
-ii) specify a GPU device to the driver; iii) create a context on the device. However, we
-are lazy, and `PyCUDA` knows _that_. `PyCUDA` allows us to achieve the three steps in one
-line:
+To start a GPU program, we usually need to go through 3 steps: i) initialize a
+cuda driver; ii) specify a GPU device to the driver; iii) create a context on
+the device. However, we are lazy, and `PyCUDA` knows _that_. `PyCUDA` allows us
+to achieve the three steps in one line:
 
     import pycuda.autoinit
     import pycuda.driver as drv
 
 ### Source Code and Compilation ###
 
-`SourceModule` is a python wrapper of the cuda compiler. It takes the cuda source
-code stored in a python string together with some optinal arguments as input, and
-compiles the source code, and caches the resultant program, so later on we run the
-program, the `PyCUDA` compiler will not re-compile the source code, unless it is
-updated.
+`SourceModule` is a python wrapper of the cuda compiler. It takes the cuda
+source code stored in a python string together with some optional arguments as
+input, and compiles the source code, and caches the resultant program, so later
+on we run the program, the `PyCUDA` compiler will not re-compile the source
+code, unless it is updated.
 
     from pycuda.compiler import SourceModule
     mod = SourceModule("""
@@ -88,17 +88,17 @@ Here is quite standard. We use `numpy` to allocate memory on CPU.
 
 ### Executation and More ###
 
-At first glance, it seems that we ommit the memory transfer from CPU to GPU and
+At first glance, it seems that we omit the memory transfer from CPU to GPU and
 the other direction. In fact, we call two `PyCUDA` magical functions
 `pycuda.driver.In` and `pycuda.driver.Out` to perform data copying. When an CPU
 array is passed into `pycuda.driver.In` and the output of `pycuda.driver.In` is
 then passed into a cuda function, `PyCUDA` will automatically allocate a chunk
 of memory on GPU, copy the data from CPU to GPU, and finally pass the address
-of the GPU memroy to the cuda function.
+of the GPU memory to the cuda function.
 
     vec_elm_mul( drv.Out(dest), drv.In(a), drv.In(b),
                  block=(400,1,1), grid=(1,1))
-                 
-Likewise, `pycuda.driver.Out` will allocate memory on GPU first, pass the address
-of GPU memory to the cuda function, and copy the data from GPU to CPU after the
-execution of the cuda function.
+
+Likewise, `pycuda.driver.Out` will allocate memory on GPU first, pass the
+address of GPU memory to the cuda function, and copy the data from GPU to CPU
+after the execution of the cuda function.
